@@ -69,13 +69,15 @@ module Heaven
           execute_and_log(%w{git fetch})
           execute_and_log(["git", "reset", "--hard", sha])
 
-          bundler_string = ["bundle", "install"]
-          log "Executing bundler: #{bundler_string.join(" ")}"
-          execute_and_log(bundler_string)
+          Bundler.with_clean_env do
+            bundler_string = ["bundle", "install"]
+            log "Executing bundler: #{bundler_string.join(" ")}"
+            execute_and_log(bundler_string)
 
-          deploy_command = ["bundle", "exec", "cap", environment, task]
-          log "Executing capistrano: #{deploy_command.join(" ")} with #{cap_exec_env}"
-          execute_and_log(deploy_command, cap_exec_env)
+            deploy_command = ["bundle", "exec", "cap", environment, task]
+            log "Executing capistrano: #{deploy_command.join(" ")} with #{cap_exec_env}"
+            execute_and_log(deploy_command, cap_exec_env)
+          end
         end
       end
     end
