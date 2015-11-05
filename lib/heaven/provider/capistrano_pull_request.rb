@@ -34,7 +34,7 @@ module Heaven
       end
 
       def staging_url
-        "http://#{data["repository"]["name"]}-#{data["number"]}.staging.devguru.co"
+        "http://#{data["repository"]["name"]}-#{data["number"]}.staging-docker.devguru.co"
       end
 
       def run!
